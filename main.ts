@@ -22,3 +22,14 @@ export function printGrid(grid: string[][]): void {
 
     console.log(output);
 }
+
+export interface Player {
+    id: number;
+    name: string;
+    symbol: string;
+}
+
+export const players: Player[] = [
+    { id: 1, name: 'Joueur 1', symbol: 'X' },
+    { id: 2, name: 'Joueur 2', symbol: 'O' },
+];
