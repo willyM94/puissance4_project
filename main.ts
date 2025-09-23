@@ -33,3 +33,17 @@ export const players: Player[] = [
     { id: 1, name: 'Joueur 1', symbol: 'X' },
     { id: 2, name: 'Joueur 2', symbol: 'O' },
 ];
+
+export function dropToken(grid: string[][], col: number, symbol: string): boolean {
+    for (let row = grid.length - 1; row >= 0; row--) {
+        if (grid[row][col] === '.') {
+            grid[row][col] = symbol;
+            return true;
+        }
+    }
+    return false;
+}
+
+export function isGridFull(grid: string[][]): boolean {
+    return grid.every(row => row.every(cell => cell !== '.'));
+}
