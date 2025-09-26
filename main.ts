@@ -61,3 +61,7 @@ export function checkWin(grid: string[][], symbol: string): boolean {
     }
     return false;
 }
+
+export function sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
