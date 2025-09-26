@@ -47,3 +47,17 @@ export function dropToken(grid: string[][], col: number, symbol: string): boolea
 export function isGridFull(grid: string[][]): boolean {
     return grid.every(row => row.every(cell => cell !== '.'));
 }
+
+import { ROWS, COLS } from './grid';
+
+export function checkWin(grid: string[][], symbol: string): boolean {
+    for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+            if (c + 3 < COLS && [0,1,2,3].every(i => grid[r][c+i] === symbol)) return true;
+            if (r + 3 < ROWS && [0,1,2,3].every(i => grid[r+i][c] === symbol)) return true;
+            if (r + 3 < ROWS && c + 3 < COLS && [0,1,2,3].every(i => grid[r+i][c+i] === symbol)) return true;
+            if (r + 3 < ROWS && c - 3 >= 0 && [0,1,2,3].every(i => grid[r+i][c-i] === symbol)) return true;
+        }
+    }
+    return false;
+}
