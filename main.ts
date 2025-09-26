@@ -65,3 +65,54 @@ export function checkWin(grid: string[][], symbol: string): boolean {
 export function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+import { createGrid, printGrid } from './grid';
+import { players } from './player';
+import { dropToken, isGridFull } from './game';
+import { checkWin } from './checkWin';
+import { sleep } from './utils';
+
+async function game() {
+    let grid = createGrid();
+    let currentPlayerIndex = 0;
+
+    while (true) {
+        printGrid(grid);
+        await sleep(1000);
+
+        const player = players[currentPlayerIndex];
+        const input = prompt(`${player.name} (${player.symbol}), choisissez une colonne (0-6) :`);
+
+        if (input === null) {
+            console.log("Jeu arrêté par l'utilisateur.");
+            break;
+        }
+
+        const col = parseInt(input);
+        if (isNaN(col) || col < 0 || col >= 7) {
+            console.log("Colonne invalide !");
+            continue;
+        }
+
+        if (!dropToken(grid, col, player.symbol)) {
+            console.log("Colonne pleine !");
+            continue;
+        }
+
+        if (checkWin(grid, player.symbol)) {
+            printGrid(grid);
+            console.log(`${player.name} gagne ! 🎉`);
+            break;
+        }
+
+        if (isGridFull(grid)) {
+            printGrid(grid);
+            console.log("Égalité ! 🤝");
+            break;
+        }
+
+        currentPlayerIndex = 1 - currentPlayerIndex;
+    }
+}
+
+game();
